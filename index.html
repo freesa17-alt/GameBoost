@@ -1,59 +1,95 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GameBoost</title>
+
+    <title>GameBoost - Gaming Tools</title>
 
     <style>
+        * {
+            box-sizing: border-box;
+        }
+
         body {
             margin: 0;
             font-family: Arial, sans-serif;
-            background: #101114;
+            background: #0f1117;
             color: white;
         }
 
         header {
-            padding: 25px 20px;
             text-align: center;
-            background: #181a20;
+            padding: 35px 20px;
+            background: #171a22;
         }
 
         header h1 {
-            margin: 0;
-            font-size: 32px;
+            font-size: 36px;
+            margin: 0 0 10px;
         }
 
         header p {
-            color: #aaa;
+            color: #aeb4c0;
+            margin: 0;
         }
 
         .container {
+            width: 92%;
             max-width: 900px;
             margin: auto;
-            padding: 20px;
+            padding: 25px 0;
         }
 
         .card {
-            background: #1b1e25;
-            padding: 20px;
-            margin: 15px 0;
-            border-radius: 15px;
+            background: #191d26;
+            border-radius: 16px;
+            padding: 22px;
+            margin-bottom: 20px;
+        }
+
+        .card h2 {
+            margin-top: 0;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 13px;
+            margin: 8px 0 15px;
+            border-radius: 10px;
+            border: 1px solid #353b48;
+            background: #10131a;
+            color: white;
+            font-size: 16px;
         }
 
         button {
-            padding: 12px 20px;
+            width: 100%;
+            padding: 14px;
             border: none;
             border-radius: 10px;
             background: #3d7eff;
             color: white;
             font-size: 16px;
+            font-weight: bold;
             cursor: pointer;
         }
 
         button:hover {
             opacity: 0.85;
+        }
+
+        #result {
+            display: none;
+            margin-top: 18px;
+            padding: 18px;
+            border-radius: 12px;
+            background: #10131a;
+        }
+
+        .tool {
+            margin-top: 20px;
         }
 
         footer {
@@ -75,41 +111,144 @@
 
     <div class="card">
         <h2>🎯 Sensitivity Calculator</h2>
-        <p>Coming soon...</p>
-        <button onclick="alert('Sensitivity Calculator coming soon!')">
-            Try
+
+        <p>
+            Enter your current sensitivity and choose your game.
+            GameBoost will calculate a starting sensitivity recommendation.
+        </p>
+
+        <label>Game</label>
+
+        <select id="game">
+            <option value="1">Blood Strike</option>
+            <option value="0.9">Free Fire</option>
+            <option value="1.1">PUBG Mobile</option>
+            <option value="1.05">Call of Duty Mobile</option>
+        </select>
+
+        <label>Current Sensitivity</label>
+
+        <input
+            type="number"
+            id="sensitivity"
+            placeholder="Example: 100"
+            min="1"
+            max="1000"
+        >
+
+        <button onclick="calculateSensitivity()">
+            Calculate
         </button>
+
+        <div id="result"></div>
     </div>
+
 
     <div class="card">
         <h2>⚡ FPS & Performance</h2>
-        <p>Learn how to improve your gaming performance.</p>
-        <button onclick="alert('Performance tools coming soon!')">
+
+        <p>
+            Learn simple ways to improve gaming performance,
+            reduce lag and get better FPS.
+        </p>
+
+        <button onclick="showMessage('Performance guides will be added soon!')">
             Explore
         </button>
     </div>
 
+
     <div class="card">
         <h2>📱 Phone Performance</h2>
-        <p>Check gaming tips for your phone.</p>
-        <button onclick="alert('Phone checker coming soon!')">
-            Check
+
+        <p>
+            Find gaming tips based on your phone's hardware.
+        </p>
+
+        <button onclick="showMessage('Phone performance checker coming soon!')">
+            Check Phone
         </button>
     </div>
 
+
+    <div class="card">
+        <h2>🎮 Game Settings</h2>
+
+        <p>
+            Recommended graphics, FPS and control settings
+            for popular mobile games.
+        </p>
+
+        <button onclick="showMessage('Game settings are coming soon!')">
+            View Settings
+        </button>
+    </div>
+
+
     <div class="card">
         <h2>📚 Gaming Guides</h2>
-        <p>Guides and tips for popular games.</p>
-        <button onclick="alert('Gaming guides coming soon!')">
+
+        <p>
+            Tips, guides and strategies for improving your gameplay.
+        </p>
+
+        <button onclick="showMessage('Gaming guides are coming soon!')">
             View Guides
         </button>
     </div>
 
 </div>
 
+
 <footer>
     © 2026 GameBoost
 </footer>
+
+
+<script>
+
+function calculateSensitivity() {
+
+    const sensitivity =
+        Number(document.getElementById("sensitivity").value);
+
+    const multiplier =
+        Number(document.getElementById("game").value);
+
+    const result =
+        document.getElementById("result");
+
+    if (!sensitivity || sensitivity <= 0) {
+
+        result.style.display = "block";
+
+        result.innerHTML =
+            "⚠️ Please enter your current sensitivity.";
+
+        return;
+    }
+
+    const recommended =
+        Math.round(sensitivity * multiplier);
+
+    result.style.display = "block";
+
+    result.innerHTML =
+        "<strong>Recommended starting sensitivity:</strong><br><br>" +
+        recommended +
+        "<br><br>" +
+        "This is only a starting recommendation. " +
+        "Adjust it according to your aim and play style.";
+}
+
+
+function showMessage(message) {
+
+    alert(message);
+
+}
+
+</script>
 
 </body>
 </html>
