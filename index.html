@@ -166,6 +166,51 @@
     </div>
 
 </div>
+    <!-- GAME PERFORMANCE CHECKER -->
+<div class="card">
+    <h2>🎮 Game Performance Checker</h2>
+
+    <label for="deviceName">Device Name</label>
+    <input type="text" id="deviceName" placeholder="Example: Vivo Y15">
+
+    <label for="gameName">Game</label>
+    <select id="gameName">
+        <option value="mlbb">Mobile Legends</option>
+        <option value="bloodstrike">Blood Strike</option>
+        <option value="freefire">Free Fire</option>
+        <option value="roblox">Roblox</option>
+    </select>
+
+    <label for="deviceRam">RAM</label>
+    <select id="deviceRam">
+        <option value="2">2 GB</option>
+        <option value="3">3 GB</option>
+        <option value="4">4 GB</option>
+        <option value="6">6 GB</option>
+        <option value="8">8 GB+</option>
+    </select>
+
+    <label for="graphics">Graphics Quality</label>
+    <select id="graphics">
+        <option value="low">Low</option>
+        <option value="medium">Medium</option>
+        <option value="high">High</option>
+    </select>
+
+    <label for="fps">Target FPS</label>
+    <select id="fps">
+        <option value="30">30 FPS</option>
+        <option value="60">60 FPS</option>
+        <option value="90">90 FPS</option>
+        <option value="120">120 FPS</option>
+    </select>
+
+    <button onclick="checkGamePerformance()">
+        Check Game Performance
+    </button>
+
+    <div id="gameResult" class="result"></div>
+    </div>
 
 <footer>
     GameBoost © 2026
@@ -252,6 +297,56 @@ function checkPerformance() {
         "Target FPS: " + targetFps + "<br>" +
         "Heat: " + heat;
 }
+    function checkGamePerformance() {
+
+    let device = document.getElementById("deviceName").value;
+    let game = document.getElementById("gameName").value;
+    let ram = Number(document.getElementById("deviceRam").value);
+    let graphics = document.getElementById("graphics").value;
+    let fps = Number(document.getElementById("fps").value);
+
+    let result = document.getElementById("gameResult");
+
+    if (device.trim() === "") {
+        device = "Your device";
+    }
+
+    let recommendation = "";
+    let estimated = "";
+
+    if (ram <= 2) {
+        recommendation = "Use Low graphics.";
+        estimated = "30 FPS recommended.";
+    } 
+    else if (ram <= 4) {
+        recommendation = "Use Low to Medium graphics.";
+        estimated = "30–60 FPS recommended.";
+    } 
+    else if (ram <= 6) {
+        recommendation = "Use Medium graphics.";
+        estimated = "60 FPS may be possible.";
+    } 
+    else {
+        recommendation = "Medium to High graphics may be possible.";
+        estimated = "60–120 FPS depending on the processor/GPU.";
+    }
+
+    if (graphics === "high" && ram <= 4) {
+        recommendation = "Lower graphics to Low for better stability.";
+    }
+
+    if (fps >= 90 && ram <= 4) {
+        estimated = "A lower FPS target is recommended.";
+    }
+
+    result.style.display = "block";
+
+    result.innerHTML =
+        "<strong>🎮 Performance Recommendation</strong><br><br>" +
+        "Device: " + device + "<br>" +
+        "Recommended: " + recommendation + "<br>" +
+        estimated;
+    }
 
 </script>
 
