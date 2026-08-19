@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>GameBoost - Gaming Tools</title>
 
     <style>
@@ -13,37 +14,38 @@
         body {
             margin: 0;
             font-family: Arial, sans-serif;
-            background: #0f1117;
+            background: #0f172a;
             color: white;
         }
 
         header {
+            background: #111827;
+            padding: 25px 15px;
             text-align: center;
-            padding: 35px 20px;
-            background: #171a22;
+            border-bottom: 1px solid #263244;
         }
 
         header h1 {
-            margin: 0 0 10px;
-            font-size: 36px;
+            margin: 0;
+            font-size: 32px;
         }
 
         header p {
-            color: #aeb4c0;
+            color: #94a3b8;
+            margin: 8px 0 0;
         }
 
         .container {
-            width: 92%;
+            width: 90%;
             max-width: 900px;
-            margin: auto;
-            padding: 25px 0;
+            margin: 30px auto;
         }
 
         .card {
-            background: #191d26;
-            border-radius: 16px;
-            padding: 22px;
-            margin-bottom: 20px;
+            background: #1e293b;
+            padding: 25px;
+            margin-bottom: 25px;
+            border-radius: 15px;
         }
 
         .card h2 {
@@ -54,49 +56,49 @@
             display: block;
             margin-top: 15px;
             margin-bottom: 6px;
+            color: #cbd5e1;
         }
 
         input,
         select {
             width: 100%;
-            padding: 13px;
-            border-radius: 10px;
-            border: 1px solid #353b48;
-            background: #10131a;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            background: #334155;
             color: white;
             font-size: 16px;
         }
 
         button {
             width: 100%;
-            padding: 14px;
-            margin-top: 18px;
+            margin-top: 20px;
+            padding: 13px;
             border: none;
-            border-radius: 10px;
-            background: #3d7eff;
+            border-radius: 8px;
+            background: #2563eb;
             color: white;
             font-size: 16px;
             font-weight: bold;
+            cursor: pointer;
         }
 
-        #result {
-            display: none;
+        button:hover {
+            background: #1d4ed8;
+        }
+
+        .result {
             margin-top: 20px;
-            padding: 18px;
-            border-radius: 12px;
-            background: #10131a;
-        }
-
-        .result-number {
-            font-size: 30px;
-            font-weight: bold;
-            margin: 10px 0;
+            padding: 15px;
+            background: #0f172a;
+            border-radius: 8px;
+            display: none;
         }
 
         footer {
             text-align: center;
-            padding: 30px;
-            color: #777;
+            padding: 25px;
+            color: #64748b;
         }
     </style>
 </head>
@@ -105,642 +107,153 @@
 
 <header>
     <h1>🎮 GameBoost</h1>
-    <p>Gaming tools, settings and performance tips</p>
+    <p>Free Gaming Tools & Performance Guides</p>
 </header>
 
 <div class="container">
 
+    <!-- DPI CALCULATOR -->
     <div class="card">
         <h2>🎯 DPI Sensitivity Calculator</h2>
 
-        <p>
-            Calculate a starting sensitivity when changing your DPI.
-            This is an approximate conversion, not a guaranteed perfect setting.
-        </p>
+        <label for="currentDpi">Current DPI</label>
+        <input type="number" id="currentDpi" placeholder="Example: 800">
 
-        <label for="game">Game</label>
-
-        <select id="game">
-            <option>Blood Strike</option>
-            <option>Free Fire</option>
-            <option>PUBG Mobile</option>
-            <option>Call of Duty Mobile</option>
-        </select>
-
-        <label for="oldDpi">Current DPI</label>
-
-        <input
-            type="number"
-            id="oldDpi"
-            placeholder="Example: 800"
-            min="1"
-        >
-
-        <label for="oldSens">Current Sensitivity</label>
-
-        <input
-            type="number"
-            id="oldSens"
-            placeholder="Example: 100"
-            min="0.01"
-            step="0.01"
-        >
+        <label for="currentSensitivity">Current Sensitivity</label>
+        <input type="number" id="currentSensitivity" step="0.01" placeholder="Example: 1.5">
 
         <label for="newDpi">New DPI</label>
+        <input type="number" id="newDpi" placeholder="Example: 1600">
 
-        <input
-            type="number"
-            id="newDpi"
-            placeholder="Example: 1600"
-            min="1"
-        >
+        <button onclick="calculateDPI()">Calculate</button>
 
-        <button onclick="calculateSensitivity()">
-            Calculate Sensitivity
-        </button>
-
-        <div id="result"></div>
+        <div id="dpiResult" class="result"></div>
     </div>
 
 
+    <!-- FPS CHECKER -->
     <div class="card">
-    <h2>⚡ FPS & Performance Checker</h2>
+        <h2>🎮 FPS & Performance Checker</h2>
 
-    <p>
-        Get basic gaming recommendations based on your phone.
-    </p>
+        <label for="ram">RAM</label>
+        <select id="ram">
+            <option value="2">2 GB</option>
+            <option value="3">3 GB</option>
+            <option value="4">4 GB</option>
+            <option value="6">6 GB</option>
+            <option value="8">8 GB</option>
+            <option value="12">12 GB+</option>
+        </select>
 
-    <label for="ram">Phone RAM</label>
+        <label for="targetFps">Target FPS</label>
+        <select id="targetFps">
+            <option value="30">30 FPS</option>
+            <option value="60">60 FPS</option>
+            <option value="90">90 FPS</option>
+            <option value="120">120 FPS</option>
+        </select>
 
-    <select id="ram">
-        <option value="2">2 GB</option>
-        <option value="3">3 GB</option>
-        <option value="4" selected>4 GB</option>
-        <option value="6">6 GB</option>
-        <option value="8">8 GB</option>
-        <option value="12">12 GB</option>
-        <option value="16">16 GB</option>
-    </select>
+        <label for="heat">Device Heat</label>
+        <select id="heat">
+            <option value="low">Cool</option>
+            <option value="medium">Warm</option>
+            <option value="high">Very Hot</option>
+        </select>
 
-    <label for="targetFps">Target FPS</label>
+        <button onclick="checkPerformance()">Check Performance</button>
 
-    <select id="targetFps">
-        <option value="30">30 FPS</option>
-        <option value="60" selected>60 FPS</option>
-        <option value="90">90 FPS</option>
-        <option value="120">120 FPS</option>
-    </select>
-
-    <label for="heat">Does your phone get hot?</label>
-
-    <select id="heat">
-        <option value="no">No</option>
-        <option value="yes">Yes</option>
-    </select>
-
-    <button onclick="checkPerformance()">
-        Check Performance
-    </button>
-
-    <div id="performanceResult"></div>
-        </div>
-
-    <div class="card">
-    <h2>📱 Phone Performance</h2>
-
-    <p>
-        Check your phone's gaming performance and get recommended settings.
-    </p>
-
-    <label for="phoneRam">Phone RAM</label>
-
-    <select id="phoneRam">
-        <option value="2">2 GB</option>
-        <option value="3">3 GB</option>
-        <option value="4" selected>4 GB</option>
-        <option value="6">6 GB</option>
-        <option value="8">8 GB</option>
-        <option value="12">12 GB</option>
-        <option value="16">16 GB</option>
-    </select>
-
-    <label for="storage">Free Storage</label>
-
-    <select id="storage">
-        <option value="5">Less than 5 GB</option>
-        <option value="10">5–10 GB</option>
-        <option value="20" selected>10–20 GB</option>
-        <option value="30">20–30 GB</option>
-        <option value="50">30+ GB</option>
-    </select>
-
-    <label for="processor">Processor Level</label>
-
-    <select id="processor">
-        <option value="low">Low</option>
-        <option value="medium" selected>Medium</option>
-        <option value="high">High</option>
-    </select>
-
-    <label for="phoneHeat">Does your phone get hot?</label>
-
-    <select id="phoneHeat">
-        <option value="no">No</option>
-        <option value="yes">Yes</option>
-    </select>
-
-    <label for="phoneFps">Target FPS</label>
-
-    <select id="phoneFps">
-        <option value="30">30 FPS</option>
-        <option value="60" selected>60 FPS</option>
-        <option value="90">90 FPS</option>
-        <option value="120">120 FPS</option>
-    </select>
-
-    <button onclick="checkPhonePerformance()">
-        Check Phone
-    </button>
-
-    <div id="phoneResult"></div>
-</div>
-
-
-    
-
-
-  
-        </div>  <div class="card">
-        <h2>📚 Gaming Guides</h2>
-
-        <p>
-            Gaming tips and guides to help improve your gameplay.
-        </p>
-
-        <button onclick="comingSoon('Gaming Guides')">
-            View Guides
-        </button>
+        <div id="performanceResult" class="result"></div>
     </div>
 
 </div>
 
 <footer>
-    © 2026 GameBoost
+    GameBoost © 2026
 </footer>
 
 
 <script>
 
-function calculateSensitivity() {
+function calculateDPI() {
 
-    const oldDpi =
-        Number(document.getElementById("oldDpi").value);
+    let currentDpi = Number(document.getElementById("currentDpi").value);
+    let currentSensitivity = Number(document.getElementById("currentSensitivity").value);
+    let newDpi = Number(document.getElementById("newDpi").value);
 
-    const oldSens =
-        Number(document.getElementById("oldSens").value);
-
-<div class="card">
-    <h2>🎮 Game Settings</h2>
-
-    <p>
-        Get recommended gaming settings based on your game and phone RAM.
-    </p>
-
-    <label for="settingsGame">Game</label>
-
-    <select id="settingsGame">
-        <option value="bloodstrike">Blood Strike</option>
-        <option value="freefire">Free Fire</option>
-        <option value="pubg">PUBG Mobile</option>
-        <option value="codm">Call of Duty Mobile</option>
-    </select>
-
-    <label for="settingsRam">Phone RAM</label>
-
-    <select id="settingsRam">
-        <option value="2">2 GB</option>
-        <option value="3">3 GB</option>
-        <option value="4" selected>4 GB</option>
-        <option value="6">6 GB</option>
-        <option value="8">8 GB</option>
-        <option value="12">12 GB</option>
-        <option value="16">16 GB</option>
-    </select>
-
-    <button onclick="getGameSettings()">
-        View Settings
-    </button>
-
-    <div id="gameSettingsResult"></div>
-</div>    const newDpi =
-        Number(document.getElementById("newDpi").value);
-
-    const game =
-        document.getElementById("game").value;
-
-    const result =
-        document.getElementById("result");
-
+    let result = document.getElementById("dpiResult");
 
     if (
-        oldDpi <= 0 ||
-        oldSens <= 0 ||
+        currentDpi <= 0 ||
+        currentSensitivity <= 0 ||
         newDpi <= 0
     ) {
-
         result.style.display = "block";
-
-        result.innerHTML =
-            "⚠️ Please enter valid numbers in all three fields.";
-
+        result.innerHTML = "⚠️ Please enter valid numbers.";
         return;
     }
 
-
-    const newSensitivity =
-        (oldSens * oldDpi) / newDpi;
-
+    let newSensitivity =
+        (currentDpi * currentSensitivity) / newDpi;
 
     result.style.display = "block";
 
     result.innerHTML =
-        "<strong>" + game + "</strong>" +
-        "<div class='result-number'>" +
-        newSensitivity.toFixed(2) +
-        "</div>" +
-        "Recommended starting sensitivity for your new DPI." +
-        "<br><br>" +
-        "Test it in-game and adjust it to your preference.";
+        "🎯 New Sensitivity: <strong>" +
+        newSensitivity.toFixed(3) +
+        "</strong>";
 }
 
-
-function comingSoon(feature) {
-
-    alert(feature + " is coming soon!");
-
-}
 
 function checkPerformance() {
 
-    const ram =
-        Number(document.getElementById("ram").value);
+    let ram = Number(document.getElementById("ram").value);
+    let targetFps = Number(document.getElementById("targetFps").value);
+    let heat = document.getElementById("heat").value;
 
-    const fps =
-        Number(document.getElementById("targetFps").value);
-
-    const heat =
-        document.getElementById("heat").value;
-
-    const result =
-        document.getElementById("performanceResult");
-
-    let graphics;
-    let advice;
-
-    if (ram <= 3) {
-        graphics = "Low";
-        advice = "Close background apps and avoid high graphics settings.";
-    } 
-    else if (ram <= 4) {
-        graphics = "Low to Medium";
-        advice = "Use balanced graphics and keep background apps closed.";
-    } 
-    else if (ram <= 6) {
-        graphics = "Medium";
-        advice = "Medium graphics should be a reasonable starting point.";
-    } 
-    else {
-        graphics = "Medium to High";
-        advice = "Your RAM is suitable for higher settings, depending on your processor and GPU.";
-    }
-
-    if (fps >= 90 && ram <= 4) {
-        graphics = "Low";
-        advice += " High FPS may require lower graphics settings.";
-    }
-
-    if (heat === "yes") {
-        advice += " Since your phone gets hot, lower graphics/FPS if temperatures become excessive and avoid playing while charging.";
-    }
-
-    result.style.display = "block";
-    result.style.marginTop = "20px";
-    result.style.padding = "18px";
-    result.style.borderRadius = "12px";
-    result.style.background = "#10131a";
-
-    result.innerHTML =
-        "<strong>Recommended starting settings</strong><br><br>" +
-        "🎨 Graphics: <strong>" + graphics + "</strong><br>" +
-        "🎞️ Target FPS: <strong>" + fps + " FPS</strong><br><br>" +
-        "💡 " + advice;
-} function checkPhonePerformance() {
-
-    const ram =
-        Number(document.getElementById("phoneRam").value);
-
-    const storage =
-        Number(document.getElementById("storage").value);
-
-    const processor =
-        document.getElementById("processor").value;
-
-    const heat =
-        document.getElementById("phoneHeat").value;
-
-    const fps =
-        Number(document.getElementById("phoneFps").value);
-
-    const result =
-        document.getElementById("phoneResult");
+    let result = document.getElementById("performanceResult");
 
     let score = 0;
-    let graphics;
-    let recommendedFps;
-    let advice = [];
 
-
-    // RAM score
-    if (ram <= 3) {
-        score += 15;
-    } 
-    else if (ram <= 4) {
-        score += 25;
-    } 
-    else if (ram <= 6) {
-        score += 35;
-    } 
-    else if (ram <= 8) {
-        score += 42;
-    } 
-    else {
-        score += 45;
-    }
-
-
-    // Processor score
-    if (processor === "low") {
-        score += 15;
-    } 
-    else if (processor === "medium") {
-        score += 25;
-    } 
-    else {
-        score += 35;
-    }
-
-
-    // Storage score
-    if (storage < 5) {
+    if (ram >= 8) {
         score += 3;
-        advice.push("Free up storage because very low storage can affect overall phone performance.");
-    } 
-    else if (storage < 10) {
-        score += 5;
-        advice.push("Consider freeing more storage before installing large games.");
-    } 
-    else if (storage < 20) {
-        score += 8;
-    } 
-    else {
-        score += 10;
+    } else if (ram >= 4) {
+        score += 2;
+    } else {
+        score += 1;
     }
 
-
-    // Heat score
-    if (heat === "yes") {
-        score -= 8;
-        advice.push("Your phone gets hot. Lower graphics or FPS if temperatures become excessive.");
-        advice.push("Avoid playing while charging when possible.");
-    } 
-    else {
-        score += 10;
+    if (targetFps <= 60) {
+        score += 2;
+    } else {
+        score += 1;
     }
 
-
-    // FPS recommendation
-    if (ram <= 3 || processor === "low") {
-
-        graphics = "Low";
-        recommendedFps = 30;
-
-        advice.push("Use Low graphics for better stability.");
-
-    } 
-    else if (ram <= 4 || processor === "medium") {
-
-        graphics = "Low to Medium";
-        recommendedFps = 60;
-
-        advice.push("Low to Medium graphics should be a good starting point.");
-
-    } 
-    else {
-
-        graphics = "Medium to High";
-        recommendedFps = 60;
-
-        advice.push("Your hardware may handle higher graphics, depending on the actual processor and GPU.");
-
+    if (heat === "low") {
+        score += 2;
+    } else if (heat === "medium") {
+        score += 1;
     }
 
+    let message = "";
 
-    // High FPS adjustment
-    if (fps >= 90) {
-
-        if (ram <= 4 || processor === "low") {
-
-            recommendedFps = 30;
-
-            advice.push("For high FPS targets, lower graphics to reduce performance drops.");
-
-        } 
-        else {
-
-            recommendedFps = 60;
-
-            advice.push("High FPS can increase heat and battery usage.");
-
-        }
+    if (score >= 6) {
+        message = "🟢 Good performance potential.";
+    } else if (score >= 4) {
+        message = "🟡 Medium performance. Try lowering graphics.";
+    } else {
+        message = "🔴 Low performance. Use low graphics and lower FPS.";
     }
-
-
-    // Keep score between 0 and 100
-    score = Math.max(0, Math.min(100, score));
-
-
-    let rating;
-
-    if (score >= 85) {
-        rating = "Excellent";
-    } 
-    else if (score >= 70) {
-        rating = "Good";
-    } 
-    else if (score >= 50) {
-        rating = "Average";
-    } 
-    else {
-        rating = "Basic";
-    }
-
 
     result.style.display = "block";
-    result.style.marginTop = "20px";
-    result.style.padding = "18px";
-    result.style.borderRadius = "12px";
-    result.style.background = "#10131a";
 
     result.innerHTML =
-        "<strong>📊 Gaming Performance</strong>" +
-        "<div class='result-number'>" +
-        score + "/100" +
-        "</div>" +
+        "<strong>" + message + "</strong><br><br>" +
+        "RAM: " + ram + " GB<br>" +
+        "Target FPS: " + targetFps + "<br>" +
+        "Heat: " + heat;
+}
 
-        "<strong>" + rating + "</strong><br><br>" +
-
-        "🎨 Recommended Graphics: <strong>" +
-        graphics +
-        "</strong><br>" +
-
-        "🎞️ Recommended FPS: <strong>" +
-        recommendedFps +
-        " FPS</strong><br><br>" +
-
-        "💡 <strong>Tips:</strong><br>" +
-        advice.map(function(tip) {
-            return "• " + tip;
-        }).join("<br>");
-} function getGameSettings() {
-
-    const game =
-        document.getElementById("settingsGame").value;
-
-    const ram =
-        Number(document.getElementById("settingsRam").value);
-
-    const result =
-        document.getElementById("gameSettingsResult");
-
-    let gameName;
-    let graphics;
-    let fps;
-    let shadows;
-    let effects;
-    let advice;
-
-
-    if (game === "bloodstrike") {
-
-        gameName = "Blood Strike";
-
-        if (ram <= 3) {
-            graphics = "Low";
-            fps = "30–40 FPS";
-        } else if (ram <= 4) {
-            graphics = "Low";
-            fps = "45–60 FPS";
-        } else {
-            graphics = "Low to Medium";
-            fps = "60 FPS";
-        }
-
-        shadows = "Off";
-        effects = "Low";
-        advice = "Prioritize FPS over graphics for smoother gameplay.";
-
-    } 
-    else if (game === "freefire") {
-
-        gameName = "Free Fire";
-
-        if (ram <= 3) {
-            graphics = "Smooth";
-            fps = "30–60 FPS";
-        } else if (ram <= 4) {
-            graphics = "Smooth";
-            fps = "60 FPS";
-        } else {
-            graphics = "Standard";
-            fps = "60 FPS";
-        }
-
-        shadows = "Off";
-        effects = "Low";
-        advice = "Use Smooth graphics if you experience frame drops.";
-
-    } 
-    else if (game === "pubg") {
-
-        gameName = "PUBG Mobile";
-
-        if (ram <= 3) {
-            graphics = "Smooth";
-            fps = "30 FPS";
-        } else if (ram <= 4) {
-            graphics = "Smooth";
-            fps = "40–60 FPS";
-        } else {
-            graphics = "Smooth";
-            fps = "60 FPS";
-        }
-
-        shadows = "Off";
-        effects = "Low";
-        advice = "Smooth graphics with higher FPS is usually better for competitive play.";
-
-    } 
-    else {
-
-        gameName = "Call of Duty Mobile";
-
-        if (ram <= 3) {
-            graphics = "Low";
-            fps = "30 FPS";
-        } else if (ram <= 4) {
-            graphics = "Low";
-            fps = "45–60 FPS";
-        } else {
-            graphics = "Medium";
-            fps = "60 FPS";
-        }
-
-        shadows = "Off";
-        effects = "Low";
-        advice = "Lower graphics if the phone becomes hot or FPS drops.";
-
-    }
-
-
-    result.style.display = "block";
-    result.style.marginTop = "20px";
-    result.style.padding = "18px";
-    result.style.borderRadius = "12px";
-    result.style.background = "#10131a";
-
-    result.innerHTML =
-        "<strong>🎮 " + gameName + "</strong>" +
-        "<br><br>" +
-
-        "🎨 Graphics: <strong>" +
-        graphics +
-        "</strong><br>" +
-
-        "🎞️ FPS: <strong>" +
-        fps +
-        "</strong><br>" +
-
-        "🌑 Shadows: <strong>" +
-        shadows +
-        "</strong><br>" +
-
-        "✨ Effects: <strong>" +
-        effects +
-        "</strong><br><br>" +
-
-        "💡 <strong>Tip:</strong> " +
-        advice;
-        } </script>
+</script>
 
 </body>
 </html>
