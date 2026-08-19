@@ -52,6 +52,11 @@
             margin-top: 0;
         }
 
+        .description {
+            color: #94a3b8;
+            line-height: 1.5;
+        }
+
         label {
             display: block;
             margin-top: 15px;
@@ -89,10 +94,23 @@
 
         .result {
             margin-top: 20px;
-            padding: 15px;
+            padding: 18px;
             background: #0f172a;
             border-radius: 8px;
             display: none;
+            line-height: 1.7;
+        }
+
+        .setting {
+            background: #1e293b;
+            padding: 12px;
+            margin: 8px 0;
+            border-radius: 8px;
+            border-left: 4px solid #2563eb;
+        }
+
+        .warning {
+            color: #fbbf24;
         }
 
         footer {
@@ -212,6 +230,56 @@
         <div id="gameResult" class="result"></div>
     </div>
 
+
+    <!-- GAME SETTINGS OPTIMIZER -->
+    <div class="card">
+        <h2>⚙️ Game Settings Optimizer</h2>
+
+        <p class="description">
+            Get recommended game settings based on your device RAM,
+            game, FPS target and gaming priority.
+        </p>
+
+        <label for="optimizerGame">Select Game</label>
+        <select id="optimizerGame">
+            <option value="mlbb">Mobile Legends</option>
+            <option value="bloodstrike">Blood Strike</option>
+            <option value="freefire">Free Fire</option>
+            <option value="roblox">Roblox</option>
+        </select>
+
+        <label for="optimizerRam">Device RAM</label>
+        <select id="optimizerRam">
+            <option value="2">2 GB</option>
+            <option value="3">3 GB</option>
+            <option value="4">4 GB</option>
+            <option value="6">6 GB</option>
+            <option value="8">8 GB+</option>
+            <option value="12">12 GB+</option>
+        </select>
+
+        <label for="optimizerFps">Target FPS</label>
+        <select id="optimizerFps">
+            <option value="30">30 FPS</option>
+            <option value="60">60 FPS</option>
+            <option value="90">90 FPS</option>
+            <option value="120">120 FPS</option>
+        </select>
+
+        <label for="priority">Main Priority</label>
+        <select id="priority">
+            <option value="fps">Maximum FPS</option>
+            <option value="balanced">Balanced</option>
+            <option value="quality">Better Graphics</option>
+        </select>
+
+        <button onclick="optimizeSettings()">
+            Optimize My Settings
+        </button>
+
+        <div id="optimizerResult" class="result"></div>
+    </div>
+
 </div>
 
 
@@ -224,11 +292,17 @@
 
 function calculateDPI() {
 
-    let currentDpi = Number(document.getElementById("currentDpi").value);
-    let currentSensitivity = Number(document.getElementById("currentSensitivity").value);
-    let newDpi = Number(document.getElementById("newDpi").value);
+    let currentDpi =
+        Number(document.getElementById("currentDpi").value);
 
-    let result = document.getElementById("dpiResult");
+    let currentSensitivity =
+        Number(document.getElementById("currentSensitivity").value);
+
+    let newDpi =
+        Number(document.getElementById("newDpi").value);
+
+    let result =
+        document.getElementById("dpiResult");
 
     if (
         currentDpi <= 0 ||
@@ -236,7 +310,8 @@ function calculateDPI() {
         newDpi <= 0
     ) {
         result.style.display = "block";
-        result.innerHTML = "⚠️ Please enter valid numbers.";
+        result.innerHTML =
+            "⚠️ Please enter valid numbers.";
         return;
     }
 
@@ -254,11 +329,17 @@ function calculateDPI() {
 
 function checkPerformance() {
 
-    let ram = Number(document.getElementById("ram").value);
-    let targetFps = Number(document.getElementById("targetFps").value);
-    let heat = document.getElementById("heat").value;
+    let ram =
+        Number(document.getElementById("ram").value);
 
-    let result = document.getElementById("performanceResult");
+    let targetFps =
+        Number(document.getElementById("targetFps").value);
+
+    let heat =
+        document.getElementById("heat").value;
+
+    let result =
+        document.getElementById("performanceResult");
 
     let score = 0;
 
@@ -285,11 +366,14 @@ function checkPerformance() {
     let message = "";
 
     if (score >= 6) {
-        message = "🟢 Good performance potential.";
+        message =
+            "🟢 Good performance potential.";
     } else if (score >= 4) {
-        message = "🟡 Medium performance. Try lowering graphics.";
+        message =
+            "🟡 Medium performance. Try lowering graphics.";
     } else {
-        message = "🔴 Low performance. Use low graphics and lower FPS.";
+        message =
+            "🔴 Low performance. Use low graphics and lower FPS.";
     }
 
     result.style.display = "block";
@@ -304,13 +388,23 @@ function checkPerformance() {
 
 function checkGamePerformance() {
 
-    let device = document.getElementById("deviceName").value;
-    let game = document.getElementById("gameName").value;
-    let ram = Number(document.getElementById("deviceRam").value);
-    let graphics = document.getElementById("graphics").value;
-    let fps = Number(document.getElementById("fps").value);
+    let device =
+        document.getElementById("deviceName").value;
 
-    let result = document.getElementById("gameResult");
+    let game =
+        document.getElementById("gameName").value;
+
+    let ram =
+        Number(document.getElementById("deviceRam").value);
+
+    let graphics =
+        document.getElementById("graphics").value;
+
+    let fps =
+        Number(document.getElementById("fps").value);
+
+    let result =
+        document.getElementById("gameResult");
 
     if (device.trim() === "") {
         device = "Your device";
@@ -320,28 +414,38 @@ function checkGamePerformance() {
     let estimated = "";
 
     if (ram <= 2) {
-        recommendation = "Use Low graphics.";
-        estimated = "30 FPS recommended.";
+        recommendation =
+            "Use Low graphics.";
+        estimated =
+            "30 FPS recommended.";
     }
     else if (ram <= 4) {
-        recommendation = "Use Low to Medium graphics.";
-        estimated = "30–60 FPS recommended.";
+        recommendation =
+            "Use Low to Medium graphics.";
+        estimated =
+            "30–60 FPS recommended.";
     }
     else if (ram <= 6) {
-        recommendation = "Use Medium graphics.";
-        estimated = "60 FPS may be possible.";
+        recommendation =
+            "Use Medium graphics.";
+        estimated =
+            "60 FPS may be possible.";
     }
     else {
-        recommendation = "Medium to High graphics may be possible.";
-        estimated = "60–120 FPS depending on the processor/GPU.";
+        recommendation =
+            "Medium to High graphics may be possible.";
+        estimated =
+            "60–120 FPS depending on the processor/GPU.";
     }
 
     if (graphics === "high" && ram <= 4) {
-        recommendation = "Lower graphics to Low for better stability.";
+        recommendation =
+            "Lower graphics to Low for better stability.";
     }
 
     if (fps >= 90 && ram <= 4) {
-        estimated = "A lower FPS target is recommended.";
+        estimated =
+            "A lower FPS target is recommended.";
     }
 
     result.style.display = "block";
@@ -351,6 +455,258 @@ function checkGamePerformance() {
         "Device: " + device + "<br>" +
         "Recommended: " + recommendation + "<br>" +
         estimated;
+}
+
+
+/* GAME SETTINGS OPTIMIZER */
+
+function optimizeSettings() {
+
+    let game =
+        document.getElementById("optimizerGame").value;
+
+    let ram =
+        Number(document.getElementById("optimizerRam").value);
+
+    let fps =
+        Number(document.getElementById("optimizerFps").value);
+
+    let priority =
+        document.getElementById("priority").value;
+
+    let result =
+        document.getElementById("optimizerResult");
+
+    let graphics = "";
+    let shadows = "";
+    let effects = "";
+    let resolution = "";
+    let antiAliasing = "";
+    let frameRate = "";
+    let recommendation = "";
+
+
+    /* RAM BASED SETTINGS */
+
+    if (ram <= 2) {
+
+        graphics = "Low";
+        shadows = "Off";
+        effects = "Low";
+        resolution = "Low";
+        antiAliasing = "Off";
+        frameRate = "30 FPS";
+
+    }
+    else if (ram <= 4) {
+
+        graphics = "Low";
+        shadows = "Off";
+        effects = "Low";
+        resolution = "Low / Medium";
+        antiAliasing = "Off";
+        frameRate = fps > 60 ? "60 FPS" : fps + " FPS";
+
+    }
+    else if (ram <= 6) {
+
+        graphics = "Medium";
+        shadows = "Low";
+        effects = "Medium";
+        resolution = "Medium";
+        antiAliasing = "Low";
+        frameRate = fps + " FPS";
+
+    }
+    else {
+
+        graphics = "Medium / High";
+        shadows = "Medium";
+        effects = "Medium / High";
+        resolution = "High";
+        antiAliasing = "Medium";
+        frameRate = fps + " FPS";
+
+    }
+
+
+    /* PRIORITY */
+
+    if (priority === "fps") {
+
+        graphics = "Low";
+        shadows = "Off";
+        effects = "Low";
+        antiAliasing = "Off";
+
+        if (ram <= 4) {
+            frameRate = "30–60 FPS";
+        }
+
+        recommendation =
+            "🚀 Maximum FPS mode: prioritize smooth gameplay and stability.";
+    }
+
+
+    if (priority === "balanced") {
+
+        recommendation =
+            "⚖️ Balanced mode: good combination of FPS, graphics and stability.";
+    }
+
+
+    if (priority === "quality") {
+
+        if (ram >= 6) {
+
+            graphics = "High";
+            shadows = "Medium";
+            effects = "High";
+            resolution = "High";
+            antiAliasing = "Medium";
+
+            recommendation =
+                "🎨 Quality mode: higher visual quality while maintaining reasonable performance.";
+
+        } else {
+
+            graphics = "Medium";
+            shadows = "Low";
+            effects = "Medium";
+
+            recommendation =
+                "⚠️ Your RAM may limit high graphics. Medium settings are recommended.";
+        }
+    }
+
+
+    /* GAME SPECIFIC */
+
+    if (game === "bloodstrike") {
+
+        if (ram <= 4) {
+
+            graphics = "Low";
+            shadows = "Off";
+            effects = "Low";
+            antiAliasing = "Off";
+        }
+    }
+
+
+    if (game === "mlbb") {
+
+        if (ram >= 6 && priority === "quality") {
+
+            graphics = "High";
+            effects = "High";
+        }
+    }
+
+
+    if (game === "freefire") {
+
+        if (ram <= 4) {
+
+            graphics = "Smooth";
+            effects = "Low";
+        }
+    }
+
+
+    if (game === "roblox") {
+
+        if (ram <= 4) {
+
+            graphics = "Low";
+            shadows = "Off";
+            effects = "Low";
+        }
+    }
+
+
+    /* FPS SAFETY */
+
+    if (fps >= 90 && ram <= 4) {
+
+        frameRate =
+            "60 FPS recommended";
+
+        recommendation +=
+            "<br>⚠️ High FPS targets may be unstable on low-RAM devices.";
+    }
+
+
+    let gameName = "";
+
+    if (game === "mlbb") {
+        gameName = "Mobile Legends";
+    }
+    else if (game === "bloodstrike") {
+        gameName = "Blood Strike";
+    }
+    else if (game === "freefire") {
+        gameName = "Free Fire";
+    }
+    else {
+        gameName = "Roblox";
+    }
+
+
+    result.style.display = "block";
+
+    result.innerHTML =
+        "<strong>⚙️ Optimized Settings</strong><br><br>" +
+
+        "<strong>Game:</strong> " +
+        gameName +
+
+        "<div class='setting'>" +
+        "🎨 Graphics: <strong>" +
+        graphics +
+        "</strong>" +
+        "</div>" +
+
+        "<div class='setting'>" +
+        "🌑 Shadows: <strong>" +
+        shadows +
+        "</strong>" +
+        "</div>" +
+
+        "<div class='setting'>" +
+        "✨ Effects: <strong>" +
+        effects +
+        "</strong>" +
+        "</div>" +
+
+        "<div class='setting'>" +
+        "🖥️ Resolution: <strong>" +
+        resolution +
+        "</strong>" +
+        "</div>" +
+
+        "<div class='setting'>" +
+        "🔲 Anti-Aliasing: <strong>" +
+        antiAliasing +
+        "</strong>" +
+        "</div>" +
+
+        "<div class='setting'>" +
+        "🎯 Frame Rate: <strong>" +
+        frameRate +
+        "</strong>" +
+        "</div>" +
+
+        "<br>" +
+
+        "<strong>Recommendation</strong><br>" +
+        recommendation +
+
+        "<br><br>" +
+
+        "<span class='warning'>" +
+        "💡 Actual performance depends on your CPU, GPU, device temperature and game optimization." +
+        "</span>";
 }
 
 </script>
