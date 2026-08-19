@@ -266,18 +266,7 @@
 </div>
 
 
-    <div class="card">
-        <h2>🎮 Game Settings</h2>
-
-        <p>
-            Recommended graphics, FPS and control settings
-            for popular games.
-        </p>
-
-        <button onclick="comingSoon('Game Settings')">
-            View Settings
-        </button>
-    </div>
+    
 
 
     <div class="card">
@@ -309,7 +298,40 @@ function calculateSensitivity() {
     const oldSens =
         Number(document.getElementById("oldSens").value);
 
-    const newDpi =
+<div class="card">
+    <h2>🎮 Game Settings</h2>
+
+    <p>
+        Get recommended gaming settings based on your game and phone RAM.
+    </p>
+
+    <label for="settingsGame">Game</label>
+
+    <select id="settingsGame">
+        <option value="bloodstrike">Blood Strike</option>
+        <option value="freefire">Free Fire</option>
+        <option value="pubg">PUBG Mobile</option>
+        <option value="codm">Call of Duty Mobile</option>
+    </select>
+
+    <label for="settingsRam">Phone RAM</label>
+
+    <select id="settingsRam">
+        <option value="2">2 GB</option>
+        <option value="3">3 GB</option>
+        <option value="4" selected>4 GB</option>
+        <option value="6">6 GB</option>
+        <option value="8">8 GB</option>
+        <option value="12">12 GB</option>
+        <option value="16">16 GB</option>
+    </select>
+
+    <button onclick="getGameSettings()">
+        View Settings
+    </button>
+
+    <div id="gameSettingsResult"></div>
+</div>    const newDpi =
         Number(document.getElementById("newDpi").value);
 
     const game =
@@ -588,7 +610,136 @@ function checkPerformance() {
         advice.map(function(tip) {
             return "• " + tip;
         }).join("<br>");
-} </script>
+} function getGameSettings() {
+
+    const game =
+        document.getElementById("settingsGame").value;
+
+    const ram =
+        Number(document.getElementById("settingsRam").value);
+
+    const result =
+        document.getElementById("gameSettingsResult");
+
+    let gameName;
+    let graphics;
+    let fps;
+    let shadows;
+    let effects;
+    let advice;
+
+
+    if (game === "bloodstrike") {
+
+        gameName = "Blood Strike";
+
+        if (ram <= 3) {
+            graphics = "Low";
+            fps = "30–40 FPS";
+        } else if (ram <= 4) {
+            graphics = "Low";
+            fps = "45–60 FPS";
+        } else {
+            graphics = "Low to Medium";
+            fps = "60 FPS";
+        }
+
+        shadows = "Off";
+        effects = "Low";
+        advice = "Prioritize FPS over graphics for smoother gameplay.";
+
+    } 
+    else if (game === "freefire") {
+
+        gameName = "Free Fire";
+
+        if (ram <= 3) {
+            graphics = "Smooth";
+            fps = "30–60 FPS";
+        } else if (ram <= 4) {
+            graphics = "Smooth";
+            fps = "60 FPS";
+        } else {
+            graphics = "Standard";
+            fps = "60 FPS";
+        }
+
+        shadows = "Off";
+        effects = "Low";
+        advice = "Use Smooth graphics if you experience frame drops.";
+
+    } 
+    else if (game === "pubg") {
+
+        gameName = "PUBG Mobile";
+
+        if (ram <= 3) {
+            graphics = "Smooth";
+            fps = "30 FPS";
+        } else if (ram <= 4) {
+            graphics = "Smooth";
+            fps = "40–60 FPS";
+        } else {
+            graphics = "Smooth";
+            fps = "60 FPS";
+        }
+
+        shadows = "Off";
+        effects = "Low";
+        advice = "Smooth graphics with higher FPS is usually better for competitive play.";
+
+    } 
+    else {
+
+        gameName = "Call of Duty Mobile";
+
+        if (ram <= 3) {
+            graphics = "Low";
+            fps = "30 FPS";
+        } else if (ram <= 4) {
+            graphics = "Low";
+            fps = "45–60 FPS";
+        } else {
+            graphics = "Medium";
+            fps = "60 FPS";
+        }
+
+        shadows = "Off";
+        effects = "Low";
+        advice = "Lower graphics if the phone becomes hot or FPS drops.";
+
+    }
+
+
+    result.style.display = "block";
+    result.style.marginTop = "20px";
+    result.style.padding = "18px";
+    result.style.borderRadius = "12px";
+    result.style.background = "#10131a";
+
+    result.innerHTML =
+        "<strong>🎮 " + gameName + "</strong>" +
+        "<br><br>" +
+
+        "🎨 Graphics: <strong>" +
+        graphics +
+        "</strong><br>" +
+
+        "🎞️ FPS: <strong>" +
+        fps +
+        "</strong><br>" +
+
+        "🌑 Shadows: <strong>" +
+        shadows +
+        "</strong><br>" +
+
+        "✨ Effects: <strong>" +
+        effects +
+        "</strong><br><br>" +
+
+        "💡 <strong>Tip:</strong> " +
+        advice;
+        } </script>
 
 </body>
 </html>
