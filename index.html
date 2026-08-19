@@ -206,16 +206,64 @@
         </div>
 
     <div class="card">
-        <h2>📱 Phone Performance</h2>
+    <h2>📱 Phone Performance</h2>
 
-        <p>
-            Find gaming tips based on your phone's hardware.
-        </p>
+    <p>
+        Check your phone's gaming performance and get recommended settings.
+    </p>
 
-        <button onclick="comingSoon('Phone Performance')">
-            Check Phone
-        </button>
-    </div>
+    <label for="phoneRam">Phone RAM</label>
+
+    <select id="phoneRam">
+        <option value="2">2 GB</option>
+        <option value="3">3 GB</option>
+        <option value="4" selected>4 GB</option>
+        <option value="6">6 GB</option>
+        <option value="8">8 GB</option>
+        <option value="12">12 GB</option>
+        <option value="16">16 GB</option>
+    </select>
+
+    <label for="storage">Free Storage</label>
+
+    <select id="storage">
+        <option value="5">Less than 5 GB</option>
+        <option value="10">5–10 GB</option>
+        <option value="20" selected>10–20 GB</option>
+        <option value="30">20–30 GB</option>
+        <option value="50">30+ GB</option>
+    </select>
+
+    <label for="processor">Processor Level</label>
+
+    <select id="processor">
+        <option value="low">Low</option>
+        <option value="medium" selected>Medium</option>
+        <option value="high">High</option>
+    </select>
+
+    <label for="phoneHeat">Does your phone get hot?</label>
+
+    <select id="phoneHeat">
+        <option value="no">No</option>
+        <option value="yes">Yes</option>
+    </select>
+
+    <label for="phoneFps">Target FPS</label>
+
+    <select id="phoneFps">
+        <option value="30">30 FPS</option>
+        <option value="60" selected>60 FPS</option>
+        <option value="90">90 FPS</option>
+        <option value="120">120 FPS</option>
+    </select>
+
+    <button onclick="checkPhonePerformance()">
+        Check Phone
+    </button>
+
+    <div id="phoneResult"></div>
+</div>
 
 
     <div class="card">
@@ -363,6 +411,183 @@ function checkPerformance() {
         "🎨 Graphics: <strong>" + graphics + "</strong><br>" +
         "🎞️ Target FPS: <strong>" + fps + " FPS</strong><br><br>" +
         "💡 " + advice;
+} function checkPhonePerformance() {
+
+    const ram =
+        Number(document.getElementById("phoneRam").value);
+
+    const storage =
+        Number(document.getElementById("storage").value);
+
+    const processor =
+        document.getElementById("processor").value;
+
+    const heat =
+        document.getElementById("phoneHeat").value;
+
+    const fps =
+        Number(document.getElementById("phoneFps").value);
+
+    const result =
+        document.getElementById("phoneResult");
+
+    let score = 0;
+    let graphics;
+    let recommendedFps;
+    let advice = [];
+
+
+    // RAM score
+    if (ram <= 3) {
+        score += 15;
+    } 
+    else if (ram <= 4) {
+        score += 25;
+    } 
+    else if (ram <= 6) {
+        score += 35;
+    } 
+    else if (ram <= 8) {
+        score += 42;
+    } 
+    else {
+        score += 45;
+    }
+
+
+    // Processor score
+    if (processor === "low") {
+        score += 15;
+    } 
+    else if (processor === "medium") {
+        score += 25;
+    } 
+    else {
+        score += 35;
+    }
+
+
+    // Storage score
+    if (storage < 5) {
+        score += 3;
+        advice.push("Free up storage because very low storage can affect overall phone performance.");
+    } 
+    else if (storage < 10) {
+        score += 5;
+        advice.push("Consider freeing more storage before installing large games.");
+    } 
+    else if (storage < 20) {
+        score += 8;
+    } 
+    else {
+        score += 10;
+    }
+
+
+    // Heat score
+    if (heat === "yes") {
+        score -= 8;
+        advice.push("Your phone gets hot. Lower graphics or FPS if temperatures become excessive.");
+        advice.push("Avoid playing while charging when possible.");
+    } 
+    else {
+        score += 10;
+    }
+
+
+    // FPS recommendation
+    if (ram <= 3 || processor === "low") {
+
+        graphics = "Low";
+        recommendedFps = 30;
+
+        advice.push("Use Low graphics for better stability.");
+
+    } 
+    else if (ram <= 4 || processor === "medium") {
+
+        graphics = "Low to Medium";
+        recommendedFps = 60;
+
+        advice.push("Low to Medium graphics should be a good starting point.");
+
+    } 
+    else {
+
+        graphics = "Medium to High";
+        recommendedFps = 60;
+
+        advice.push("Your hardware may handle higher graphics, depending on the actual processor and GPU.");
+
+    }
+
+
+    // High FPS adjustment
+    if (fps >= 90) {
+
+        if (ram <= 4 || processor === "low") {
+
+            recommendedFps = 30;
+
+            advice.push("For high FPS targets, lower graphics to reduce performance drops.");
+
+        } 
+        else {
+
+            recommendedFps = 60;
+
+            advice.push("High FPS can increase heat and battery usage.");
+
+        }
+    }
+
+
+    // Keep score between 0 and 100
+    score = Math.max(0, Math.min(100, score));
+
+
+    let rating;
+
+    if (score >= 85) {
+        rating = "Excellent";
+    } 
+    else if (score >= 70) {
+        rating = "Good";
+    } 
+    else if (score >= 50) {
+        rating = "Average";
+    } 
+    else {
+        rating = "Basic";
+    }
+
+
+    result.style.display = "block";
+    result.style.marginTop = "20px";
+    result.style.padding = "18px";
+    result.style.borderRadius = "12px";
+    result.style.background = "#10131a";
+
+    result.innerHTML =
+        "<strong>📊 Gaming Performance</strong>" +
+        "<div class='result-number'>" +
+        score + "/100" +
+        "</div>" +
+
+        "<strong>" + rating + "</strong><br><br>" +
+
+        "🎨 Recommended Graphics: <strong>" +
+        graphics +
+        "</strong><br>" +
+
+        "🎞️ Recommended FPS: <strong>" +
+        recommendedFps +
+        " FPS</strong><br><br>" +
+
+        "💡 <strong>Tips:</strong><br>" +
+        advice.map(function(tip) {
+            return "• " + tip;
+        }).join("<br>");
 } </script>
 
 </body>
